@@ -1,0 +1,7 @@
+<% max = @params.keys.max { |a, b| a.length <=> b.length } -%>
+<% @params.keys.sort.each do |key| -%>
+* <%= raw("%-*s: %s" % [max.length, key.to_s, inspect_object(@params[key])]) %>
+<% end -%>
+
+* Process: <%= raw $$ %>
+* Server : <%= raw `hostname -s`.chomp %>

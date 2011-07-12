@@ -55,8 +55,16 @@ class ExceptionNotifier
         instance_variable_set("@#{name}", value)
       end
 
-      prefix   = "#{@options[:email_prefix]}#{@kontroller.controller_name}##{@kontroller.action_name}"
-      subject  = "#{prefix} (#{@exception.class}) #{@exception.message.inspect}"
+      if @kontroller.class != MissingController
+        prefix   = "#{@options[:email_prefix]}#{@kontroller.controller_name}##{@kontroller.action_name}"
+      else
+        prefix   = @options[:email_prefix]
+      end
+      if @message
+        subject  = "#{prefix} #{@message}"
+      else
+        subject  = "#{prefix} (#{@exception.class}) #{@exception.message.inspect}"
+      end
       subject  = subject.length > 120 ? subject[0...120] + "..." : subject
 
       mail(:to => @options[:exception_recipients], :from => @options[:sender_address], :subject => subject) do |format|
