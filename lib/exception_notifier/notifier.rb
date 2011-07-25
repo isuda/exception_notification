@@ -56,7 +56,7 @@ class ExceptionNotifier
       end
 
       if @kontroller.class != MissingController
-        prefix   = "#{@options[:email_prefix]}#{@kontroller.controller_name}##{@kontroller.action_name}"
+        prefix   = "[#{@options[:email_prefix]}: EXCEPTION] - #{@kontroller.controller_name}##{@kontroller.action_name}"
       else
         prefix   = @options[:email_prefix]
       end
